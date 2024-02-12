@@ -5,22 +5,30 @@ const mongoose = require("mongoose");
 const app = express();
 const RootRouter = require("./Router");
 app.use(express.json());
-app.use(cors({
-  origin: 'https://cadre-eight.vercel.app/'
-}));
+app.use(
+  cors({
+    origin: "https://cadre-eight.vercel.app/",
+  })
+);
 app.use("/public", express.static("public"));
 
 app.use(RootRouter);
 
-mongoose.connect(process.env.MONGO).then(() => {
-  console.log("connect successfully");
-});
-const server = app.listen(() => {
-  console.log(`Your server is running on ${server.address().port}`);
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => {
+    console.log("connect successfully");
+  })
+  .catch((error) => {
+    console.log("Connection Error", error);
+  });
+
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Your server is running on ${process.env.PORT}`);
 });
 const io = require("socket.io")(server, {
   cors: {
-    origin:"*"
+    origin: "*",
   },
 });
 
