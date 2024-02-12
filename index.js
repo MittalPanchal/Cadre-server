@@ -7,7 +7,7 @@ const RootRouter = require("./Router");
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://cadre-eight.vercel.app/",
+    origin: "*",
   })
 );
 app.use("/public", express.static("public"));
