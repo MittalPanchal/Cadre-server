@@ -22,6 +22,7 @@ mongoose
   .catch((error) => {
     console.log("Connection Error", error);
   });
+mongoose.set("strictQuery", true);
 
 const server = app.listen(process.env.PORT, () => {
   console.log(`Your server is running on ${process.env.PORT}`);
