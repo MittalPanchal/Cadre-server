@@ -7,7 +7,7 @@ const RootRouter = require("./Router");
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: "https://cadre-frontend.vercel.app/",
   })
 );
 app.use("/public", express.static("public"));
@@ -36,7 +36,7 @@ const server = app.listen(process.env.PORT, () => {
 });
 const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: "https://cadre-frontend.vercel.app/",
   },
 });
 
