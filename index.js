@@ -15,7 +15,14 @@ app.use("/public", express.static("public"));
 app.use(RootRouter);
 
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // Increase timeout to 30 seconds
+    socketTimeoutMS: 30000,
+    // Optionally increase the connection timeout as well
+    connectTimeoutMS: 30000,
+  })
   .then(() => {
     console.log("connect successfully");
   })
