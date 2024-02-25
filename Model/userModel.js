@@ -60,16 +60,20 @@ userSchema.statics.signup = async function (
 };
 
 userSchema.statics.login = async function (email, password) {
-  const user = await this.findOne({ email: email });
-  if (!user) {
-    throw Error("Email is not correct! try with another email");
-  }
+  try {
+    const user = await this.findOne({ email: email }).exec();
+    if (!user) {
+      throw Error("Email is not correct! try with another email");
+    }
 
-  const isMatched = await bcrypt.compare(password, user.password);
+    const isMatched = await bcrypt.compare(password, user.password);
 
-  if (!isMatched) {
-    throw Error("Password is incorrect!");
+    if (!isMatched) {
+      throw Error("Password is incorrect!");
+    }
+    return user;
+  } catch (error) {
+    console.log(error);
   }
-  return user;
 };
 module.exports = mongoose.model("Users", userSchema);
