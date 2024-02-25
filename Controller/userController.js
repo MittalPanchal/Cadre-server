@@ -23,16 +23,14 @@ const signUp = async (req, res) => {
       contact_number
     );
     let token = generateJWT(user);
-    res
-      .status(200)
-      .send({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role_name: user.role_name,
-        jwt: token,
-        contact_number: user.contact_number,
-      });
+    res.status(200).send({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role_name: user.role_name,
+      jwt: token,
+      contact_number: user.contact_number,
+    });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -44,6 +42,15 @@ const signIn = async (req, res) => {
     let user = await User.login(email, password);
     let token = generateJWT(user);
     console.log({
+      // _id: user._id,
+      name: user.name,
+      email: user.email,
+      role_name: user.role_name,
+      jwt: token,
+      img: user.img,
+      contact_number: user.contact_number,
+    });
+    res.status(200).send({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -52,17 +59,6 @@ const signIn = async (req, res) => {
       img: user.img,
       contact_number: user.contact_number,
     });
-    res
-      .status(200)
-      .send({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role_name: user.role_name,
-        jwt: token,
-        img: user.img,
-        contact_number: user.contact_number,
-      });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -128,16 +124,14 @@ const updateUser = async (req, res) => {
     { new: true }
   )
     .then((data) => {
-      res
-        .status(200)
-        .send({
-          success: true,
-          message: "Details update successfully",
-          _id: data._id,
-          name: data.name,
-          contact_number: data.contact_number,
-          role_name: data.role_name,
-        });
+      res.status(200).send({
+        success: true,
+        message: "Details update successfully",
+        _id: data._id,
+        name: data.name,
+        contact_number: data.contact_number,
+        role_name: data.role_name,
+      });
     })
     .catch((error) => {
       res.status(500).send({ message: error.message });
